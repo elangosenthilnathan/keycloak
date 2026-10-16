@@ -32,7 +32,9 @@ jobs:
     - name: Run Harness Scan
       shell: bash
       run: |
-        ${GITHUB_WORKSPACE}/sl analyze --tag branch=${{ github.head_ref }} --verbose --app "${GITHUB_REPOSITORY#*/}" --analysis-timeout 120m --cpg-generation-timeout 120m .
+        export MAVEN_OPTS="-Dmaven.build.cache.enabled=true"
+        mvnw clean install -DskipTests
+        #${GITHUB_WORKSPACE}/sl analyze --tag branch=${{ github.head_ref }} --verbose --app "${GITHUB_REPOSITORY#*/}" --analysis-timeout 120m --cpg-generation-timeout 120m .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
 
